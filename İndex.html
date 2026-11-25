@@ -1,0 +1,238 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sardor kafesi</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f6f2;
+      color: #202820;
+    }
+
+    header {
+      background: #176b43;
+      color: white;
+      padding: 25px 18px;
+      border-radius: 0 0 22px 22px;
+    }
+
+    header h1 {
+      margin: 0 0 7px;
+      font-size: 27px;
+    }
+
+    header p {
+      margin: 0;
+      opacity: 0.9;
+    }
+
+    .container {
+      padding: 18px;
+    }
+
+    .search {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      font-size: 21px;
+    }
+
+    .food {
+      background: white;
+      padding: 14px;
+      border-radius: 15px;
+      margin-bottom: 13px;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      box-shadow: 0 2px 8px #0000000d;
+    }
+
+    .food-emoji {
+      font-size: 42px;
+    }
+
+    .food-info {
+      flex: 1;
+    }
+
+    .food-info h3 {
+      margin: 0 0 6px;
+    }
+
+    .price {
+      color: #176b43;
+      font-weight: bold;
+    }
+
+    button {
+      background: #176b43;
+      color: white;
+      border: none;
+      padding: 10px 13px;
+      border-radius: 9px;
+      font-size: 14px;
+    }
+
+    #cart {
+      background: white;
+      padding: 15px;
+      border-radius: 15px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>Sardor kafesi 🍽️</h1>
+    <p>Yangiyo‘l bo‘ylab mazali milliy taomlar!</p>
+  </header>
+
+  <main class="container">
+
+    <input
+      class="search"
+      id="search"
+      type="text"
+      placeholder="Taom qidirish..."
+      oninput="searchFood()"
+    >
+
+    <h2>Bizning menyu</h2>
+
+    <div id="menu">
+
+      <div class="food" data-name="Osh">
+        <div class="food-emoji">🍛</div>
+        <div class="food-info">
+          <h3>Osh</h3>
+          <div class="price">35 000 so‘m</div>
+        </div>
+        <button onclick="addToCart('Osh', 35000)">Qo‘shish</button>
+      </div>
+
+      <div class="food" data-name="Manti">
+        <div class="food-emoji">🥟</div>
+        <div class="food-info">
+          <h3>Manti</h3>
+          <div class="price">30 000 so‘m</div>
+        </div>
+        <button onclick="addToCart('Manti', 30000)">Qo‘shish</button>
+      </div>
+
+      <div class="food" data-name="Lag‘mon">
+        <div class="food-emoji">🍜</div>
+        <div class="food-info">
+          <h3>Lag‘mon</h3>
+          <div class="price">32 000 so‘m</div>
+        </div>
+        <button onclick="addToCart('Lag‘mon', 32000)">Qo‘shish</button>
+      </div>
+
+      <div class="food" data-name="Somsa">
+        <div class="food-emoji">🥮</div>
+        <div class="food-info">
+          <h3>Somsa</h3>
+          <div class="price">12 000 so‘m</div>
+        </div>
+        <button onclick="addToCart('Somsa', 12000)">Qo‘shish</button>
+      </div>
+
+    </div>
+
+    <div id="cart">
+      <h2>🛒 Savatcha</h2>
+      <p id="cart-items">Hozircha savatcha bo‘sh.</p>
+      <h3 id="total">Jami: 0 so‘m</h3>
+    </div>
+
+  </main>
+
+  <script>
+    let cart = [];
+    
+    function addToCart(name, price) {
+      cart.push({ name: name, price: price });
+      showCart();
+    }
+
+    function showCart() {
+      let items = "";
+      let total = 0;
+
+      cart.forEach(function(item) {
+        items += item.name + " — " +
+          item.price.toLocaleString("uz-UZ") + " so‘m<br>";
+
+        total += item.price;
+      });
+
+      document.getElementById("cart-items").innerHTML = items;
+      document.getElementById("total").innerText =
+        "Jami: " + total.toLocaleString("uz-UZ") + " so‘m";
+    }
+
+    function searchFood() {
+      let query = document.getElementById("search")
+        .value.toLowerCase();
+
+      let foods = document.querySelectorAll(".food");
+
+      foods.forEach(function(food) {
+        let name = food.dataset.name.toLowerCase();
+        food.style.display = name.includes(query) ? "flex" : "none";
+      });
+    }
+  </script>
+<div class="container">
+  <h2>🍔 Bizning menyu</h2>
+
+  <div class="food">
+    <h3>🍕 Pizza</h3>
+    <p>35 000 so'm</p>
+    <button onclick="buy('Pizza', 35000)">
+      Buyurtma berish
+    </button>
+  </div>
+
+  <div class="food">
+    <h3>🍔 Burger</h3>
+    <p>25 000 so'm</p>
+    <button onclick="buy('Burger', 25000)">
+      Buyurtma berish
+    </button>
+  </div>
+
+  <div class="food">
+    <h3>🍟 Kartoshka fri</h3>
+    <p>15 000 so'm</p>
+    <button onclick="buy('Kartoshka fri', 15000)">
+      Buyurtma berish
+    </button>
+  </div>
+</div>
+
+<script>
+  function buy(name, price) {
+    alert(name + " buyurtma qilindi!\nNarxi: " + price + " so'm");
+  }
+</script>
+</body>
+</html>
